@@ -8,6 +8,8 @@ if not exist "C:\Program Files\WinRAR\winrar.exe" (
 	exit
 ) else (echo WinRAR is installed.)
 
+cd .
+
 rem unzip files.
 "C:\Program Files\WinRAR\winrar.exe" x win_cc*.zip .
 "C:\Program Files\WinRAR\winrar.exe" x cc20*win.zip .
@@ -21,6 +23,9 @@ cd..
 .\Exceptions\ExceptionDeployer.exe --workflow=install --mode=post
 cd ..
 .\cc*serializ*\win\adobe_prtk.exe --tool=VolumeSerialize --provfile=.\cc*serializ*\win\prov_win.xml
+
+echo Modifying registry...
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Adobe\Adobe Acrobat\DC\FeatureLockDown\cServices /v bToggleAdobeDocumentServices" /t REG_DWORD /d 00000001 /f
 
 echo DONE!
 pause
